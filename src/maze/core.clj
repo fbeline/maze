@@ -2,7 +2,7 @@
   (require [maze.misc :refer :all]))
 
 (def empty-list-gen (comp vec repeat))
-(defn- maze-factory [n] (empty-list-gen n (empty-list-gen n 0)))
+(defn- maze-factory [rows columns] (empty-list-gen rows (empty-list-gen columns 0)))
 
 (def directions {:N 1, :S 2, :E 4, :W 8})
 (def dx {:E 1, :W -1, :N 0, :S 0})
@@ -32,5 +32,5 @@
                (recur (add-queue nx ny t)))
           (recur t m))))))
 
-(defn create [n]
-  (->> n maze-factory (gen 0 0)))
+(defn create [rows columns]
+  (->> (maze-factory rows columns) (gen 0 0)))
