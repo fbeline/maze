@@ -18,7 +18,7 @@
 (def x-length (comp y-length first))
 
 (defn- gen [x y maze]
-  (loop [x x, y y, [[[x, y], d] & t] (add-queue x y []), m maze]
+  (loop [[[[x, y], d] & t] (add-queue x y []), m maze]
     (if (nil? x)
       m
       (let [nx (+ x (d dx))
@@ -29,8 +29,8 @@
           (->> m
                (mset (d directions) x y)
                (mset (-> d opposite directions) nx ny)
-               (recur nx ny (add-queue nx ny t)))
-          (recur x y t m))))))
+               (recur (add-queue nx ny t)))
+          (recur t m))))))
 
 (defn create [n]
   (->> n maze-factory (gen 0 0)))
